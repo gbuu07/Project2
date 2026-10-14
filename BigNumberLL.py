@@ -1,4 +1,5 @@
 # Gia Buu Luong
+# Aymaan Changai Mangalote
 # ECE 241 - Project 2: Preliminary
 
 class Link:
@@ -99,4 +100,31 @@ class BigNumberLL:
             current = current.next
 
         sign = "" if self.positive else "-"
-        return "[" + str(self.size) + "] " + sign + "".join(parts)  
+        return "[" + str(self.size) + "] " + sign + "".join(parts)
+
+    def __gt__(self, other):
+        if self.positive and not other.positive:
+            return True
+        if not self.positive and other.positive:
+            return False
+
+        if self.size != other.size:
+            bigger_size_wins = self.size > other.size
+            return bigger_size_wins if self.positive else not bigger_size_wins
+
+        a = self.first
+        b = other.first
+        while a is not None:
+            if a.data != b.data:
+                bigger_digit_wins = a.data > b.data
+                return bigger_digit_wins if self.positive else not bigger_digit_wins
+            a = a.next
+            b = b.next
+
+        return False
+
+    def __lt__(self, other):
+        return other.__gt__(self)
+
+    def __eq__(self, other):
+        return not (self > other) and not (self < other)
