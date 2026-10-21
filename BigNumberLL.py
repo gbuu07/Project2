@@ -128,3 +128,27 @@ class BigNumberLL:
 
     def __eq__(self, other):
         return not (self > other) and not (self < other)
+    
+    def __add__(self, other):
+        result = BigNumberLL("0")
+        result.deleteFirst()
+
+        a = self.last
+        b = other.last
+        carry = 0
+
+        while a is not None or b is not None or carry:
+            total = carry
+
+            if a is not None:
+                total += a.data
+                a = a.prev
+
+            if b is not None:
+                total += b.data
+                b = b.prev
+
+            result.insertFirst(total % 10)
+            carry = total // 10
+
+        return result
