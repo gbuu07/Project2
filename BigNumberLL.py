@@ -152,3 +152,35 @@ class BigNumberLL:
             carry = total // 10
 
         return result
+
+    def __sub__(self, other):
+        if self < other:
+            result = other - self
+            result.positive = False
+            return result
+
+        result = BigNumberLL("0")
+        result.deleteFirst()
+
+        a = self.last
+        b = other.last
+        borrow = 0
+
+        while a is not None:
+            digit = a.data - borrow
+            a = a.prev
+
+            if b is not None:
+                digit -= b.data
+                b = b.prev
+
+            if digit < 0:
+                digit += 10
+                borrow = 1
+            else:
+                borrow = 0
+
+            result.insertFirst(digit)
+
+        result.trimFront()
+        return result
