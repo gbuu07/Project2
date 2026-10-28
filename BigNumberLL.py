@@ -1,6 +1,6 @@
 # Gia Buu Luong
 # Aymaan Changai Mangalote
-# ECE 241 - Project 2: Preliminary
+# ECE 241 - Project 2: FunWithBigNumbers
 
 class Link:
     def __init__(self, data):
